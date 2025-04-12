@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "@/utils/fixLeafletIcon";
 
-import { useState } from "react";
+import { useState} from "react";
 import { places, Place } from "@/data/places";
 import PlaceSidebar from "./PlaceSidebar";
 import SearchBar from "./SearchBar";

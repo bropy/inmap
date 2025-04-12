@@ -1,8 +1,6 @@
 import Image from "next/image";
 import searchIcon from "@/assets/search.svg";
-// import { Filters } from "@/types/filters";
 import { Place } from "@/data/places";
-
 type Filters = {
   ramps?: boolean;
   tactileElements?: boolean;
@@ -23,6 +21,7 @@ function SearchBar({
   searchText: string;
   setSelectedPlace: (place: Place | null) => void;
 }) {
+
   return (
     <div className="fixed top-0 left-0 w-80 flex flex-col items-start justify-center z-[1000] p-4">
       <div className="flex items-center bg-white rounded-md shadow-md px-4 py-2 z-[1001] w-full mb-2 h-12">
