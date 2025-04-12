@@ -10,9 +10,9 @@ export default function HomePage() {
   const [filters, setFilters] = useState({});
 
   return (
-    <main style={{ position: 'relative' }}>
+    <main style={{ position: "relative" }}>
       <FilterPanel onChange={setFilters} />
-      <MapView filters={filters} />
+      <MapView filters={filters}/>
     </main>
   );
 }
