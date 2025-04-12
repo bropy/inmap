@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "@/utils/fixLeafletIcon";
 
-import { useState} from "react";
+import { useState, useEffect } from "react";
 import { places, Place } from "@/data/places";
 import PlaceSidebar from "./PlaceSidebar";
 import SearchBar from "./SearchBar";
@@ -41,6 +41,10 @@ export default function MapView({ filters }: { filters: Filters }) {
       matchesFilters(place, filters) &&
       place.name.toLowerCase().includes(searchText.toLowerCase().trim())
   );
+
+  useEffect(() => {
+    setSelectedPlace(null);
+  }, [searchText, filters]);
 
   return (
     <div>
