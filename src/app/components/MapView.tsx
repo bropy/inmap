@@ -73,9 +73,6 @@ export default function MapView({ filters }: { filters: Filters }) {
               click: () => setSelectedPlace(place),
             }}
           >
-            <Popup>
-              <strong>{place.name}</strong>
-            </Popup>
           </Marker>
         ))}
         {selectedPlace && (

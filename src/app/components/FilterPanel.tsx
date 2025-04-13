@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { IoChevronDown, IoChevronUp } from 'react-icons/io5'; 
 
 type Filters = {
   ramps: boolean;
@@ -22,35 +23,61 @@ const defaultFilters: Filters = {
 
 export default function FilterPanel({ onChange }: { onChange: (filters: Filters) => void }) {
   const [filters, setFilters] = useState<Filters>(defaultFilters);
+  const [visible, setVisible] = useState<boolean>(false);
 
   const handleChange = (key: keyof Filters) => {
     const updated = { ...filters, [key]: !filters[key] };
     setFilters(updated);
-    onChange(updated); 
+    onChange(updated);
+  };
+
+  const handleReset = () => {
+    setFilters(defaultFilters);
+    onChange(defaultFilters);
   };
 
   return (
-    <div className="p-4 bg-white shadow-md rounded-md absolute top-4 left-80 z-[1000] w-72">
-      <h2 className="text-lg font-semibold mb-2 text-black">Фільтри доступності</h2>
-      {Object.entries(filters).map(([key, value]) => (
-        <label key={key} className="flex items-center space-x-2 mb-2">
-          <input
-            type="checkbox"
-            checked={value}
-            onChange={() => handleChange(key as keyof Filters)}
-          />
-          <span>
-            {{
-              ramps: 'Пандус',
-              tactileElements: 'Тактильні елементи',
-              adaptedToilets: 'Адаптовані туалети',
-              wideEntrance: 'Зручний вхід',
-              visualImpairmentFriendly: 'Для людей із вадами зору',
-              wheelchairAccessible: 'Для людей на візку',
-            }[key as keyof Filters]}
-          </span>
-        </label>
-      ))}
+    <div className="absolute top-4 left-80 z-[1000] w-58 text-black font-medium">
+      <div
+        onClick={() => setVisible(!visible)}
+        className="relative z-10 bg-gray-300 rounded-lg cursor-pointer shadow px-4 py-2 text-center"
+      >
+        <span className="block text-center font-medium">Фільтри</span>
+        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+          {visible ? <IoChevronUp /> : <IoChevronDown />}
+        </div>
+      </div>
+
+      {visible && (
+        <div className="relative z-0 bg-white shadow rounded-b-lg p-4 space-y-2 text-sm transition-all duration-300 -mt-2">
+          {Object.entries(filters).map(([key, value]) => (
+            <label key={key} className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={value}
+                onChange={() => handleChange(key as keyof Filters)}
+              />
+              <span>
+                {{
+                  ramps: 'Пандус',
+                  tactileElements: 'Тактильні елементи',
+                  adaptedToilets: 'Адаптовані туалети',
+                  wideEntrance: 'Зручний вхід',
+                  visualImpairmentFriendly: 'Для людей із вадами зору',
+                  wheelchairAccessible: 'Для людей на візку',
+                }[key as keyof Filters]}
+              </span>
+            </label>
+          ))}
+
+          <button
+            onClick={handleReset}
+            className="w-full mt-2 py-1 bg-gray-500 hover:bg-gray-700 text-white rounded"
+          >
+            Скинути фільтри
+          </button>
+        </div>
+      )}
     </div>
   );
 }
