@@ -1,6 +1,6 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "@/utils/fixLeafletIcon";
 
@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 import { places, Place } from "@/data/places";
 import PlaceSidebar from "./PlaceSidebar";
 import SearchBar from "./SearchBar";
+import useTactilePaths from "@/hooks/useTactilePaths";
+
 
 type Filters = {
   ramps?: boolean;
@@ -36,6 +38,7 @@ function CenterMapOnPlace({ position }: { position: [number, number] }) {
 export default function MapView({ filters }: { filters: Filters }) {
   const [searchText, setSearchText] = useState("");
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const tactilePaths = useTactilePaths();
   const filteredPlaces = places.filter(
     (place) =>
       matchesFilters(place, filters) &&
@@ -75,6 +78,9 @@ export default function MapView({ filters }: { filters: Filters }) {
           >
           </Marker>
         ))}
+          {tactilePaths.map((path, idx) => (
+            <Polyline key={idx} positions={path} color="orange" weight={5} />
+          ))}
         {selectedPlace && (
           <CenterMapOnPlace position={selectedPlace.position} />
         )}
