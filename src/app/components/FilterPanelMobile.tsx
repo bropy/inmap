@@ -37,7 +37,7 @@ export default function FilterPanelMobile({ onChange }: { onChange: (filters: Fi
   };
 
   return (
-    <div className="block md:hidden fixed top-20 left-1/2 transform -translate-x-1/2 w-[90%] z-[1000]">
+    <div className="block md:hidden fixed top-32 left-1/2 transform -translate-x-1/2 w-[90%] z-[1000]">
       <div
         onClick={() => setVisible(!visible)}
         className="relative z-10 bg-gray-300 rounded-xl cursor-pointer shadow px-4 py-2 text-center"
