@@ -14,23 +14,30 @@ export default function PlaceSidebar({
 }) {
   return (
     <div className="fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-[1001] p-4 overflow-y-auto transition-transform transform translate-x-0">
-      <button
-        onClick={onClose}
-        className="text-gray-500 hover:text-black absolute top-2 right-2"
-      >
-        ✖
-      </button>
 
-      <h2 className="text-xl font-bold mb-2 text-black">{place.name}</h2>
+      <div className="relative bg-gray-200 rounded-2xl px-4 py-2 mb-8 text-center shadow-sm">
+        <h2 className="text-lg font-semibold text-black">{place.name}</h2>
+
+        <button
+          onClick={onClose}
+          className="absolute top-1/2 right-1 -translate-y-1/2 text-gray-500 hover:text-black text-xl"
+          >
+            ✖
+        </button>
+      </div>
+
 
       <img
-        className="w-full h-48 object-cover bg-amber-50 mb-2 rounded-l-lg"
+        src="/###.jpg"
+        className="w-full h-48 object-cover bg-amber-50 mb-4 rounded-l-lg"
         alt={place.name + " Image"}
       />
 
-      <p className="text-gray-700 mb-2">{"place.description"}</p>
+      <div className='bg-gray-200 p-2 mb-4'>
+        <p className="text-gray-700 ">{"place.description"}</p>
+      </div>
 
-      <ul className="space-y-1 text-sm text-black">
+      <ul className="bg-gray-200 p-2 space-y-1 text-sm text-black">
         <li>Пандуси: {place.accessibility.ramps ? "✅ Є" : "❌ Нема"}</li>
         <li>
           Адаптовані туалети:{" "}
@@ -59,14 +66,14 @@ export default function PlaceSidebar({
         <textarea
  
           placeholder="Напищіть відгук"
-          className="border border-gray-300 rounded px-2 py-1 w-full mb-2 h-full mr-1"
+          className="border border-gray-300 text-black rounded px-2 py-1 w-full mb-2 h-full mr-1"
         />
-        <button className="bg-blue-500 text-white px-4 py-2 rounded h-full">
+        <button className="bg-gray-400 hover:bg-gray-500 transition text-black px-4 py-2 rounded h-full cursor-pointer">
           Надіслати
         </button>
       </div>
       <div className="mt-4 w-full bg-gray-100 p-2 rounded mb-2">
-        <p className="text-sm">{"Відгук"}</p>
+        <p className="text-sm font-medium text-gray-700">{"Відгук"}</p>
       </div>
     </div>
   );

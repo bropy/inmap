@@ -40,7 +40,7 @@ export default function FilterPanel({ onChange }: { onChange: (filters: Filters)
     <div className="absolute top-4 left-80 z-[1000] w-58 text-black font-medium">
       <div
         onClick={() => setVisible(!visible)}
-        className="relative z-10 bg-gray-300 rounded-lg cursor-pointer shadow px-4 py-2 text-center"
+        className="relative z-10 bg-gray-300 rounded-2xl cursor-pointer shadow px-4 py-2 text-center"
       >
         <span className="block text-center font-medium">Фільтри</span>
         <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -49,7 +49,7 @@ export default function FilterPanel({ onChange }: { onChange: (filters: Filters)
       </div>
 
       {visible && (
-        <div className="relative z-0 bg-white shadow rounded-b-lg p-4 space-y-2 text-sm transition-all duration-300 -mt-2">
+        <div className="relative z-0 bg-white shadow rounded-b-lg p-4 py-8 space-y-2 text-sm transition-all duration-300 -mt-4">
           {Object.entries(filters).map(([key, value]) => (
             <label key={key} className="flex items-center space-x-2">
               <input
