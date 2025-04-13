@@ -44,7 +44,6 @@ export default function PlaceSidebar({
 
   return (
     <div className="fixed top-12 right-0 h-full w-80 bg-white shadow-lg z-[1001] p-4 overflow-y-auto transition-transform transform translate-x-0">
-
       <div className="relative bg-gray-300 rounded-2xl px-2 py-2 pr-6 mb-8 text-center shadow-sm">
         <h2 className="text-lg font-semibold text-black">{place.name}</h2>
 
@@ -66,63 +65,79 @@ export default function PlaceSidebar({
         <p className="text-gray-700 ">{place.description}</p>
       </div>
 
-      <ul className="bg-gray-200 p-2 space-y-1 text-sm text-black rounded-lg">
-        <li>{place.accessibility.ramps ? "✅ Є " : "❌ Нема "}Пандуси</li>
-        <li>
-          {place.accessibility.adaptedToilets ? "✅ Є" : "❌ Нема"} Адаптовані
-          туалети
-        </li>
-        <li>
-          {place.accessibility.tactileElements ? "✅ Є " : "❌ Нема "}
-          Тактильні елементи
-        </li>
-        <li>
-          Зручний вхід: {place.accessibility.wideEntrance ? "✅ Є" : "❌ Нема"}
-        </li>
-        <li>
-          Підходить для людей із вадами зору:{" "}
-          {place.accessibility.visualImpairmentFriendly ? "✅ Так" : "❌ Ні"}
-        </li>
-        <li>
-          Для людей на візку:{" "}
-          {place.accessibility.wheelchairAccessible ? "✅ Так" : "❌ Ні"}
-        </li>
-      </ul>
+      <table className="w-full bg-gray-200 text-sm text-black rounded-lg">
+        <tbody>
+          <tr className="border-b border-gray-300">
+            <td className="px-2 py-1 w-6">
+              {place.accessibility.ramps ? "✅" : "❌"}
+            </td>
+            <td className="px-2 py-1">Пандуси</td>
+          </tr>
+          <tr className="border-b border-gray-300">
+            <td className="px-2 py-1">
+              {place.accessibility.adaptedToilets ? "✅" : "❌"}
+            </td>
+            <td className="px-2 py-1">Адаптовані туалети</td>
+          </tr>
+          <tr className="border-b border-gray-300">
+            <td className="px-2 py-1">
+              {place.accessibility.tactileElements ? "✅" : "❌"}
+            </td>
+            <td className="px-2 py-1">Тактильні елементи</td>
+          </tr>
+          <tr className="border-b border-gray-300">
+            <td className="px-2 py-1">
+              {place.accessibility.wideEntrance ? "✅" : "❌"}
+            </td>
+            <td className="px-2 py-1">Зручний вхід</td>
+          </tr>
+          <tr className="border-b border-gray-300">
+            <td className="px-2 py-1">
+              {place.accessibility.visualImpairmentFriendly ? "✅" : "❌"}
+            </td>
+            <td className="px-2 py-1">Для людей із вадами зору</td>
+          </tr>
+          <tr>
+            <td className="px-2 py-1">
+              {place.accessibility.wheelchairAccessible ? "✅" : "❌"}
+            </td>
+            <td className="px-2 py-1">Для людей на візку</td>
+          </tr>
+        </tbody>
+      </table>
       {review.rating != -1 && (
-          <div className="flex justify-center flex-wrap gap-1 mt-4 w-full rounded-lg bg-gray-200 p-2">
-            <textarea
-              onInput={(e: any) => {
-                e.style.height = "1px";
-                e.style.height = e.scrollHeight + "px";
-              }}
-              placeholder="Напишіть відгук"
-              className="border border-gray-300 text-black rounded px-2 py-1 w-full mb-2 h-full mr-1 overflow-hidden resize-none min-h-8"
-              value={review.comment}
-              onChange={(e) =>
-                setReview({ ...review, comment: e.target.value })
-              }
-            />
+        <div className="flex justify-center flex-wrap gap-1 mt-4 w-full rounded-lg bg-gray-200 p-2">
+          <textarea
+            onInput={(e: any) => {
+              e.style.height = "1px";
+              e.style.height = e.scrollHeight + "px";
+            }}
+            placeholder="Напишіть відгук"
+            className="border border-gray-300 text-black rounded px-2 py-1 w-full mb-2 h-full mr-1 overflow-hidden resize-none min-h-8"
+            value={review.comment}
+            onChange={(e) => setReview({ ...review, comment: e.target.value })}
+          />
 
-            {review.comment.trim() !== "" && (
-              <>
-                <Rating
-                  initialValue={review.rating}
-                  SVGstyle={{ display: "inline" }}
-                  onClick={(rate: number) => {
-                    setReview({ ...review, rating: rate });
-                  }}
-                />
-                {review.rating > 0 && (
-                  <button
-                    className="w-full bg-gray-400 hover:bg-gray-500 transition text-black px-4 py-2 rounded h-full cursor-pointer"
-                    onClick={SendReview}
-                  >
-                    Надіслати
-                  </button>
-                )}
-              </>
-            )}
-          </div>
+          {review.comment.trim() !== "" && (
+            <>
+              <Rating
+                initialValue={review.rating}
+                SVGstyle={{ display: "inline" }}
+                onClick={(rate: number) => {
+                  setReview({ ...review, rating: rate });
+                }}
+              />
+              {review.rating > 0 && (
+                <button
+                  className="w-full bg-gray-400 hover:bg-gray-500 transition text-black px-4 py-2 rounded h-full cursor-pointer"
+                  onClick={SendReview}
+                >
+                  Надіслати
+                </button>
+              )}
+            </>
+          )}
+        </div>
       )}
 
       {Review.filter((review) => review.placeId === place.id).map((review) => (
