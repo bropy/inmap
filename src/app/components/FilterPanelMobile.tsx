@@ -21,7 +21,7 @@ const defaultFilters: Filters = {
   wheelchairAccessible: false,
 };
 
-export default function FilterPanel({ onChange }: { onChange: (filters: Filters) => void }) {
+export default function FilterPanelMobile({ onChange }: { onChange: (filters: Filters) => void }) {
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [visible, setVisible] = useState<boolean>(false);
 
@@ -37,19 +37,19 @@ export default function FilterPanel({ onChange }: { onChange: (filters: Filters)
   };
 
   return (
-    <div className="absolute top-4 left-84 z-[1000] w-58 text-black font-medium">
+    <div className="block md:hidden fixed top-20 left-1/2 transform -translate-x-1/2 w-[90%] z-[1000]">
       <div
         onClick={() => setVisible(!visible)}
-        className="relative z-10 bg-gray-300 rounded-2xl cursor-pointer shadow px-4 py-2 text-center"
+        className="relative z-10 bg-gray-300 rounded-xl cursor-pointer shadow px-4 py-2 text-center"
       >
-        <span className="block text-center font-medium">Фільтри</span>
-        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+        <span className="block text-center font-medium text-black">Фільтри</span>
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-black">
           {visible ? <IoChevronUp /> : <IoChevronDown />}
         </div>
       </div>
 
       {visible && (
-        <div className="relative z-0 bg-white shadow rounded-b-lg p-4 py-8 space-y-2 text-sm transition-all duration-300 -mt-4">
+        <div className="bg-white shadow rounded-b-lg p-4 space-y-2 text-sm text-black transition-all duration-300 -mt-2">
           {Object.entries(filters).map(([key, value]) => (
             <label key={key} className="flex items-center space-x-2">
               <input
