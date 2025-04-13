@@ -1,16 +1,18 @@
 export type Place = {
-    id: number;
-    name: string;
-    position: [number, number];
-    accessibility: {
-      ramps: boolean;
-      tactileElements: boolean;
-      adaptedToilets: boolean;
-      wideEntrance: boolean;
-      visualImpairmentFriendly: boolean;
-      wheelchairAccessible: boolean;
-    };
+  id: number;
+  name: string;
+  position: [number, number];
+  accessibility: {
+    ramps: boolean;
+    tactileElements: boolean;
+    adaptedToilets: boolean;
+    wideEntrance: boolean;
+    visualImpairmentFriendly: boolean;
+    wheelchairAccessible: boolean;
   };
+  image: string;
+  description: string;
+};
 
 export const places: Place[] = [
   {
@@ -25,6 +27,8 @@ export const places: Place[] = [
       visualImpairmentFriendly: false,
       wheelchairAccessible: true,
     },
+    image: 'https://veronica.ua/wp-content/uploads/2018/02/amadeus-5.jpg',
+    description: 'Атмосферний бар у центрі Львова з креативним інтер’єром та живою музикою.',
   },
   {
     id: 2,
@@ -38,6 +42,8 @@ export const places: Place[] = [
       visualImpairmentFriendly: true,
       wheelchairAccessible: true,
     },
+    image: '/images/planetakino.jpg',
+    description: 'Сучасний кінотеатр із технологією 4DX у торговому центрі Forum Lviv.',
   },
   {
     id: 3,
@@ -51,6 +57,8 @@ export const places: Place[] = [
       visualImpairmentFriendly: false,
       wheelchairAccessible: false,
     },
+    image: '/images/ribs.jpg',
+    description: 'Популярний ресторан з м’ясними стравами у старовинній будівлі Арсеналу.',
   },
   {
     id: 4,
@@ -64,6 +72,8 @@ export const places: Place[] = [
       visualImpairmentFriendly: true,
       wheelchairAccessible: false,
     },
+    image: '/images/mcdonalds.jpg',
+    description: 'Мережевий ресторан швидкого харчування з відомим меню та швидким обслуговуванням.',
   },
   {
     id: 5,
@@ -77,7 +87,10 @@ export const places: Place[] = [
       visualImpairmentFriendly: true,
       wheelchairAccessible: true,
     },
-  },{
+    image: '/images/goodfried.jpg',
+    description: 'Сучасне місце з авторськими стравами на фритюрі та крафтовими напоями.',
+  },
+  {
     id: 6,
     name: 'Вірменка',
     position: [49.843277005392395, 24.031906235775306],
@@ -89,7 +102,10 @@ export const places: Place[] = [
       visualImpairmentFriendly: true,
       wheelchairAccessible: true,
     },
-  },{
+    image: '/images/virmenka.jpg',
+    description: 'Культове кафе з автентичною кавою у вірменському кварталі Львова.',
+  },
+  {
     id: 7,
     name: 'Lviv Handmade Chocolate',
     position: [49.84123676738078, 24.03309118513618],
@@ -101,5 +117,7 @@ export const places: Place[] = [
       visualImpairmentFriendly: true,
       wheelchairAccessible: false,
     },
+    image: '/images/chocolate.jpg',
+    description: 'Магазин і кафе з ручною шоколадною продукцією та видом на центр міста.',
   },
 ];
