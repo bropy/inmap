@@ -9,7 +9,8 @@ import { places, Place } from "@/data/places";
 import PlaceSidebar from "./PlaceSidebar";
 import SearchBar from "./SearchBar";
 import useTactilePaths from "@/hooks/useTactilePaths";
-
+import BusStopLayer from "./BusStopLayer";
+import RoutePlanner from "./RoutePlaner"; // Import the new RoutePlanner component
 
 type Filters = {
   ramps?: boolean;
@@ -78,9 +79,12 @@ export default function MapView({ filters }: { filters: Filters }) {
           >
           </Marker>
         ))}
-          {tactilePaths.map((path, idx) => (
-            <Polyline key={idx} positions={path} color="orange" weight={5} />
-          ))}
+        {tactilePaths.map((path, idx) => (
+          <Polyline key={idx} positions={path} color="orange" weight={5} />
+        ))}
+
+        <BusStopLayer />
+        
         {selectedPlace && (
           <CenterMapOnPlace position={selectedPlace.position} />
         )}

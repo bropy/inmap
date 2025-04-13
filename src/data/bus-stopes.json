@@ -1,0 +1,148 @@
+{
+  "busStops": [
+    {
+      "id": "bs001",
+      "name": "Оперний театр",
+      "position": [49.84352982113663, 24.02600702481169],
+      "buses": [
+        {
+          "number": "9",
+          "destination": "Аеропорт Львів",
+          "disabilityAccess": true,
+          "lowFloor": true,
+          "visualAnnouncements": true,
+          "tactileMarkings": false
+        },
+        {
+          "number": "17",
+          "destination": "Залізничний вокзал",
+          "disabilityAccess": true,
+          "lowFloor": true,
+          "visualAnnouncements": true,
+          "tactileMarkings": true
+        },
+        {
+          "number": "21",
+          "destination": "Центр міста",
+          "disabilityAccess": false,
+          "lowFloor": false,
+          "visualAnnouncements": false,
+          "tactileMarkings": false
+        }
+      ],
+      "facilities": {
+        "shelter": true,
+        "seating": true,
+        "realTimeInfo": true,
+        "tactilePaving": true,
+        "ramp": true
+      }
+    },
+    {
+      "id": "bs002",
+      "name": "Площа Ринок",
+      "position": [49.84158141353029, 24.03220657804343],
+      "buses": [
+        {
+          "number": "4A",
+          "destination": "Високий Замок",
+          "disabilityAccess": true,
+          "lowFloor": true,
+          "visualAnnouncements": true,
+          "tactileMarkings": true
+        },
+        {
+          "number": "5",
+          "destination": "Личаківський цвинтар",
+          "disabilityAccess": true,
+          "lowFloor": true,
+          "visualAnnouncements": false,
+          "tactileMarkings": false
+        },
+        {
+          "number": "26",
+          "destination": "Стрийський парк",
+          "disabilityAccess": false,
+          "lowFloor": false,
+          "visualAnnouncements": false,
+          "tactileMarkings": false
+        }
+      ],
+      "facilities": {
+        "shelter": true,
+        "seating": true,
+        "realTimeInfo": true,
+        "tactilePaving": false,
+        "ramp": false
+      }
+    },
+    {
+      "id": "bs003",
+      "name": "Львівська Політехніка",
+      "position": [49.83479849875218, 24.015205769879344],
+      "buses": [
+        {
+          "number": "3A",
+          "destination": "Центральний автовокзал",
+          "disabilityAccess": true,
+          "lowFloor": true,
+          "visualAnnouncements": true,
+          "tactileMarkings": false
+        },
+        {
+          "number": "16",
+          "destination": "Медичний університет",
+          "disabilityAccess": true,
+          "lowFloor": true,
+          "visualAnnouncements": true,
+          "tactileMarkings": false
+        }
+      ],
+      "facilities": {
+        "shelter": true,
+        "seating": true,
+        "realTimeInfo": false,
+        "tactilePaving": true,
+        "ramp": true
+      }
+    },
+    {
+      "id": "bs004",
+      "name": "Парк Івана Франка",
+      "position": [49.83993576096091, 24.02207236364717],
+      "buses": [
+        {
+          "number": "7",
+          "destination": "Львівський зоопарк",
+          "disabilityAccess": true,
+          "lowFloor": true,
+          "visualAnnouncements": false,
+          "tactileMarkings": false
+        },
+        {
+          "number": "20",
+          "destination": "Шевченківський гай",
+          "disabilityAccess": false,
+          "lowFloor": false,
+          "visualAnnouncements": false,
+          "tactileMarkings": false
+        },
+        {
+          "number": "47A",
+          "destination": "Сихів",
+          "disabilityAccess": true,
+          "lowFloor": true,
+          "visualAnnouncements": true,
+          "tactileMarkings": true
+        }
+      ],
+      "facilities": {
+        "shelter": false,
+        "seating": true,
+        "realTimeInfo": false,
+        "tactilePaving": false,
+        "ramp": true
+      }
+    }
+  ]
+}
