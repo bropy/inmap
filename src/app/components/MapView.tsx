@@ -65,6 +65,11 @@ export default function MapView({ filters }: { filters: Filters }) {
         zoomControl={false}
         style={{ height: "100vh", width: "100%" }}
       >
+        <div style={{zIndex: 1000, position: "absolute", top: 10, right: 10}}>
+        <RoutePlanner />
+
+        </div>
+
         <TileLayer
           attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

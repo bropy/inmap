@@ -26,7 +26,9 @@ function RoutePlannerControl() {
   const handleMapClick = useCallback((e: L.LeafletMouseEvent) => {
     if (!selectingPoint) return;
     
-    const { lat, lng } = e.latlng;
+    const lat = e.latlng?.lat ?? 0;
+    const lng = e.latlng?.lng ?? 0;
+
     if (selectingPoint === 'start') {
       setStartPoint([lat, lng]);
     } else if (selectingPoint === 'end') {
