@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { IoChevronDown, IoChevronUp } from 'react-icons/io5'; 
+import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
 
 type Filters = {
   ramps: boolean;
@@ -37,7 +37,7 @@ export default function FilterPanel({ onChange }: { onChange: (filters: Filters)
   };
 
   return (
-    <div className="absolute top-4 left-84 z-[1000] w-58 text-black font-medium">
+    <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-[1000] w-[90%] sm:w-64 text-black font-medium">
       <div
         onClick={() => setVisible(!visible)}
         className="relative z-10 bg-gray-300 rounded-2xl cursor-pointer shadow px-4 py-2 text-center"

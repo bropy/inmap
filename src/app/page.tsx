@@ -1,30 +1,14 @@
-'use client';
+import Link from "next/link";
 
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
-import FilterPanel from './components/FilterPanel';
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import MainPage from './components/mainPage';
-
-const MapView = dynamic(() => import('./components/MapView'), { ssr: false });
-
-export default function HomePage() {
-  const [filters, setFilters] = useState({});
-
+export default function MainPage() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route
-          path="/map"
-          element={
-            <main style={{ position: "relative" }}>
-              <FilterPanel onChange={setFilters} />
-              <MapView filters={filters} />
-            </main>
-          }
-        />
-      </Routes>
-    </Router>
+    <div className="flex items-center text-black justify-center w-full h-lvh">
+      mainPage
+      <Link href="/map" className="ms-4">
+        <button className="bg-blue-500 text-white px-4 py-2 rounded">
+          Go to map
+        </button>
+      </Link>
+    </div>
   );
 }

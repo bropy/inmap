@@ -47,7 +47,7 @@ export default function MapView({ filters }: { filters: Filters }) {
   }, [searchText, filters]);
 
   return (
-    <div className="bg-white relative min-h-screen pl-80 text-black">
+    <div className="bg-white relative min-h-screen md:pl-80 text-black">
       <SearchBar
         places={filteredPlaces}
         onChange={setSearchText}
