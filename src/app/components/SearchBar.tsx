@@ -1,6 +1,6 @@
 import Image from "next/image";
-import searchIcon from "@/assets/search.svg";
 import { Place } from "@/data/places";
+import { FaSearch } from "react-icons/fa";
 type Filters = {
   ramps?: boolean;
   tactileElements?: boolean;
@@ -33,7 +33,7 @@ function SearchBar({
           onChange={(e) => onChange(e.target.value)}
         />
         <button className="ml-2">
-          <Image src={searchIcon} alt="Search" className="w-6 h-6" />
+          <FaSearch className="w-6 h-6"/>
         </button>
       </div>
 
