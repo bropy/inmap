@@ -13,7 +13,7 @@ export default function PlaceSidebar({
   onClose: () => void;
 }) {
   return (
-    <div className="fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-[1001] p-4 overflow-y-auto transition-transform transform translate-x-0">
+    <div className="fixed top-12 right-0 h-full w-80 bg-white shadow-lg z-[1001] p-4 overflow-y-auto transition-transform transform translate-x-0">
 
       <div className="relative bg-gray-300 rounded-2xl px-2 py-2 pr-6 mb-8 text-center shadow-sm">
         <h2 className="text-lg font-semibold text-black">{place.name}</h2>
