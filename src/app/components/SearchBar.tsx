@@ -23,8 +23,8 @@ function SearchBar({
 }) {
 
   return (
-    <div className="fixed w-full max-w-md mx-auto md:top-0 md:left-0 md:w-80  flex flex-col items-start justify-center z-[1000] p-4">
-      <div className="flex items-center bg-gray-300 rounded-2xl shadow-md px-4 py-2 z-[1001] w-full mb-8 h-12">
+    <div className="fixed w-full max-w-md mx-auto md:top-12 md:left-0 md:w-80  flex flex-col items-start justify-center z-[1000] p-4">
+      <div className="flex items-center bg-gray-300 rounded-2xl shadow-md px-4 py-2 z-[1001] w-full mb-4 h-12">
         <input
           type="text"
           className="outline-none bg-transparent px-2 flex-grow"
