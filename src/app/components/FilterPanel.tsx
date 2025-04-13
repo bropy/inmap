@@ -37,7 +37,7 @@ export default function FilterPanel({ onChange }: { onChange: (filters: Filters)
   };
 
   return (
-    <div className="absolute top-4 left-80 z-[1000] w-58 text-black font-medium">
+    <div className="absolute top-4 left-84 z-[1000] w-58 text-black font-medium">
       <div
         onClick={() => setVisible(!visible)}
         className="relative z-10 bg-gray-300 rounded-2xl cursor-pointer shadow px-4 py-2 text-center"
@@ -72,7 +72,7 @@ export default function FilterPanel({ onChange }: { onChange: (filters: Filters)
 
           <button
             onClick={handleReset}
-            className="w-full mt-2 py-1 bg-gray-500 hover:bg-gray-700 text-white rounded"
+            className="w-full mt-2 py-1 bg-gray-400 hover:bg-gray-500 text-black rounded"
           >
             Скинути фільтри
           </button>

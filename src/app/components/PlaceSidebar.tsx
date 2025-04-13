@@ -15,12 +15,12 @@ export default function PlaceSidebar({
   return (
     <div className="fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-[1001] p-4 overflow-y-auto transition-transform transform translate-x-0">
 
-      <div className="relative bg-gray-200 rounded-2xl px-4 py-2 mb-8 text-center shadow-sm">
+      <div className="relative bg-gray-300 rounded-2xl px-2 py-2 pr-6 mb-8 text-center shadow-sm">
         <h2 className="text-lg font-semibold text-black">{place.name}</h2>
 
         <button
           onClick={onClose}
-          className="absolute top-1/2 right-1 -translate-y-1/2 text-gray-500 hover:text-black text-xl"
+          className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 hover:text-black text-xl"
           >
             ✖
         </button>
