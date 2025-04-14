@@ -64,6 +64,7 @@ export default function PlaceSidebar({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           location_id: place.id,
@@ -72,6 +73,11 @@ export default function PlaceSidebar({
         }),
         
       });
+      console.log("Response:", JSON.stringify({
+        location_id: place.id,
+        rating: review.rating,
+        comment: review.comment,
+      }));
       if (!response.ok) {
         console.error("Помилка надсилання відгуку:", await response.text());
       }
