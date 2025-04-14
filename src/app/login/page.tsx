@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { FaUser, FaLock } from 'react-icons/fa';  
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,43 +22,57 @@ export default function LoginPage() {
     if (res.ok) {
       const data = await res.json();
       localStorage.setItem('token', data.token);
-      router.push('/map'); 
+      router.push('/map');
     } else {
       setError('Невірний логін або пароль');
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100 px-4">
-      <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow w-full max-w-sm">
-        <h2 className="text-xl font-bold mb-4 text-center">Вхід до системи</h2>
+    <div className="flex items-center justify-center h-screen bg-gradient-to-r from-yellow-400 to-purple-500 px-4">
+      <form onSubmit={handleLogin} className="bg-white p-8 rounded-xl shadow-xl max-w-sm w-full transition-transform transform hover:scale-105">
+        <h2 className="text-3xl font-semibold text-center text-blue-600 mb-6">Вхід до системи</h2>
 
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+        {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
 
-        <input
-          type="text"
-          placeholder="Логін"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="w-full mb-3 px-3 py-2 border rounded"
-          required
-        />
+        <div className="relative mb-6">
+          <FaUser className="absolute left-3 top-3 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Логін"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full text-black px-10 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+            required
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder="Пароль"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-4 px-3 py-2 border rounded"
-          required
-        />
+        <div className="relative mb-6">
+          <FaLock className="absolute left-3 top-3 text-gray-400" />
+          <input
+            type="password"
+            placeholder="Пароль"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full text-black px-10 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+            required
+          />
+        </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg shadow-md transform transition-transform hover:scale-105"
         >
           Увійти
         </button>
+
+        <div className="text-center mt-4 text-sm text-gray-500">
+          <p>Ще не маєте акаунта? 
+            <span className="text-blue-500 cursor-pointer hover:underline">
+              <a href="/reg"> Зареєструйтесь</a>
+            </span>
+          </p>
+        </div>
       </form>
     </div>
   );
