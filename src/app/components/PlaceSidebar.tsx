@@ -29,6 +29,7 @@ export default function PlaceSidebar({
     place.accessibility
   );
 
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   const toggleAccessibility = (key: keyof typeof suggestedAccessibility) => {
     setSuggestedAccessibility((prev) => ({
@@ -36,32 +37,64 @@ export default function PlaceSidebar({
       [key]: !prev[key],
     }));
   };
+
   const submitAccessibilityChanges = () => {
     //надіслати пропозицію на сервер
   };
 
 
-  const SendReview = () => {
-    const newId = Math.max(...Review.map((r) => r.id)) + 1;
+  const SendReview = () => { 
+    const newId = Math.max(...reviews.map((r) => r.id)) + 1;
 
-    Review.unshift({
+    var newReview = {
       id: newId,
-      placeId: place.id,
+      location_id: place.id,
       userName: "User",
+      user: 0,
       rating: review.rating,
       comment: review.comment,
-    });
-    
-    setReview({
-      rating: -1,
-      comment: "",
-    });
+    };
+
+    reviews.unshift(newReview);
+
+    const sendReview = async () => {
+      const response = await fetch("http://127.0.0.1:8000/api/reviews/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          location_id: place.id,
+          rating: review.rating,
+          comment: review.comment,
+        }),
+        
+      });
+      if (!response.ok) {
+        console.error("Помилка надсилання відгуку:", await response.text());
+      }
+    };
+    sendReview();
+
+      setReview({
+        rating: -1,
+        comment: "",
+      });
   }
 
-
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/reviews/?location_id=" + place?.id
+      );
+      const data = await response.json();
+      setReviews(data);
+    };
+    fetchReviews();
+  }, [place]);
 
   return (
-    <div className="fixed top-12 right-0 h-full w-80 bg-white shadow-lg z-[1001] p-4 overflow-y-auto transition-transform transform translate-x-0">
+    <div className="pb-16 fixed top-12 right-0 h-full w-80 bg-white shadow-lg z-[1001] p-4 overflow-y-auto transition-transform transform translate-x-0">
       <div className="relative bg-gray-300 rounded-2xl px-2 py-2 pr-6 mb-8 text-center shadow-sm">
         <h2 className="text-lg font-semibold text-black">{place.name}</h2>
 
@@ -74,7 +107,7 @@ export default function PlaceSidebar({
       </div>
 
       <img
-        src={place.image}
+        src={place.image_url}
         className="w-full h-48 object-cover bg-amber-50 mb-4 rounded-lg"
         alt={place.name + " Image"}
       />
@@ -203,22 +236,26 @@ export default function PlaceSidebar({
         </div>
       )}
 
-      {Review.filter((review) => review.placeId === place.id).map((review) => (
-        <div className="mt-4 w-full bg-gray-100 p-2 rounded mb-2">
-          <div className="flex items-center mb-2 h-8 justify-between">
-            <h3 className="text-sm font-semibold text-gray-800 pr-2">
-              {review.userName}
-            </h3>
-            <Rating
-              initialValue={review.rating}
-              allowHover={false}
-              SVGstyle={{ display: "inline" }}
-              size={16}
-            />
+      {reviews
+        .filter((review) => review.location_id === place.id)
+        .map((review) => (
+          <div className="mt-4 w-full bg-gray-100 p-2 rounded mb-2">
+            <div className="flex items-center mb-2 h-8 justify-between">
+              <h3 className="text-sm font-semibold text-gray-800 pr-2">
+                {review.userName}
+              </h3>
+              <Rating
+                initialValue={review.rating}
+                allowHover={false}
+                SVGstyle={{ display: "inline" }}
+                size={16}
+              />
+            </div>
+            <p className="text-sm font-medium text-gray-700">
+              {review.comment}
+            </p>
           </div>
-          <p className="text-sm font-medium text-gray-700">{review.comment}</p>
-        </div>
-      ))}
+        ))}
     </div>
   );
 }

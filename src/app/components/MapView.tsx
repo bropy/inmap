@@ -4,8 +4,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from "react-
 import "leaflet/dist/leaflet.css";
 import "@/utils/fixLeafletIcon";
 
-import { useState, useEffect } from "react";
-import { places, Place } from "@/data/places";
+import { useState, useEffect, use } from "react";
+import { Place } from "@/data/places";
 import PlaceSidebar from "./PlaceSidebar";
 import SearchBar from "./SearchBar";
 import useTactilePaths from "@/hooks/useTactilePaths";
@@ -38,6 +38,7 @@ function CenterMapOnPlace({ position }: { position: [number, number] }) {
 
 export default function MapView({ filters }: { filters: Filters }) {
   const [searchText, setSearchText] = useState("");
+  const [places, setPlaces] = useState<Place[]>([]);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const tactilePaths = useTactilePaths();
   const filteredPlaces = places.filter(
@@ -49,6 +50,18 @@ export default function MapView({ filters }: { filters: Filters }) {
   useEffect(() => {
     setSelectedPlace(null);
   }, [searchText, filters]);
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      const response = await fetch("http://127.0.0.1:8000/api/locations/");
+      const data = await response.json();
+      console.log(data);
+      setPlaces(data);
+    }
+    fetchPlaces();
+  },[]);
+
+
 
   return (
     <div className="bg-white relative min-h-screen md:pl-80 text-black">
