@@ -5,10 +5,9 @@ import { useMap, Marker, Polyline, Popup } from "react-leaflet";
 import L from "leaflet";
 import { FaDirections, FaTimes, FaWalking, FaBus, FaAccessibleIcon } from "react-icons/fa";
 import { places } from "@/data/places";
-import { busStops } from "@/data/bus-stopes.json"; // Make sure to import your bus stop data
+import { busStops } from "@/data/bus-stopes.json";
 import useTactilePaths from "@/hooks/useTactilePaths";
 
-// Custom control button component for the map
 function RoutePlannerControl() {
   const [showPlanner, setShowPlanner] = useState(false);
   const map = useMap();
@@ -22,7 +21,6 @@ function RoutePlannerControl() {
   const [suggestedBuses, setSuggestedBuses] = useState<BusSuggestion[]>([]);
   const [mapClickListener, setMapClickListener] = useState<((e: L.LeafletMouseEvent) => void) | null>(null);
 
-  // Function to handle map clicks for selecting points
   const handleMapClick = useCallback((e: L.LeafletMouseEvent) => {
     if (!selectingPoint) return;
     
@@ -36,23 +34,19 @@ function RoutePlannerControl() {
     }
     
     setSelectingPoint(null);
-    // Remove the click listener after selection
     if (mapClickListener) {
       map.off('click', mapClickListener);
       setMapClickListener(null);
     }
   }, [selectingPoint, map, mapClickListener]);
 
-  // Add or remove map click listener when selectingPoint changes
   useEffect(() => {
     if (selectingPoint) {
-      // Set cursor to crosshair to indicate selection mode
       map.getContainer().style.cursor = 'crosshair';
       const listener = (e: L.LeafletMouseEvent) => handleMapClick(e);
       map.on('click', listener);
       setMapClickListener(listener);
     } else {
-      // Reset cursor
       map.getContainer().style.cursor = '';
       if (mapClickListener) {
         map.off('click', mapClickListener);
@@ -68,25 +62,18 @@ function RoutePlannerControl() {
     };
   }, [selectingPoint, map, handleMapClick]);
 
-  // Calculate route when both points are set
   useEffect(() => {
     if (startPoint && endPoint) {
       calculateRoute();
     }
   }, [startPoint, endPoint, useTactilePathsOption]);
 
-  // Function to calculate route between points
   const calculateRoute = () => {
     if (!startPoint || !endPoint) return;
 
-    // Find the closest tactile paths if enabled
     let routeCoordinates: [number, number][] = [];
     
     if (useTactilePathsOption && tactilePaths.length > 0) {
-      // Try to incorporate tactile paths in the route
-      // This is a simplified version - in a real app, you'd use a proper routing algorithm
-      
-      // Find closest points on tactile paths to start and end
       let closestPathToStart = null;
       let closestPathToEnd = null;
       let minDistStart = Infinity;
@@ -109,12 +96,10 @@ function RoutePlannerControl() {
         });
       });
       
-      // Create a route that incorporates tactile paths when possible
       if (closestPathToStart === closestPathToEnd && closestPathToStart) {
-        // Both points are closest to the same path
         routeCoordinates = [startPoint, ...closestPathToStart, endPoint];
       } else if (closestPathToStart && closestPathToEnd) {
-        // Connect between paths if they're different
+
         routeCoordinates = [
           startPoint, 
           ...closestPathToStart, 
@@ -123,13 +108,11 @@ function RoutePlannerControl() {
         ];
       }
     } else {
-      // Simple direct route if tactile paths aren't used
       routeCoordinates = [startPoint, endPoint];
     }
     
     setCalculatedRoute(routeCoordinates);
     
-    // Calculate total distance
     let totalDistance = 0;
     for (let i = 0; i < routeCoordinates.length - 1; i++) {
       totalDistance += L.latLng(routeCoordinates[i])
@@ -138,7 +121,6 @@ function RoutePlannerControl() {
     
     setDistance(Math.round(totalDistance));
     
-    // Find and suggest bus routes
     suggestBusRoutes(startPoint, endPoint);
   };
 
@@ -151,19 +133,15 @@ function RoutePlannerControl() {
     visualAnnouncements: boolean;
     tactileMarkings: boolean;
   }
-
-  // Function to suggest bus routes between points
   const suggestBusRoutes = (start: [number, number], end: [number, number]) => {
     if (!busStops || !busStops.length) {
       setSuggestedBuses([]);
       return;
     }
 
-    // Find nearby bus stops to start and end points
     const startLatLng = L.latLng(start);
     const endLatLng = L.latLng(end);
     
-    // Find bus stops within 500 meters of start and end
     const nearStartStops = busStops.filter(stop => 
       startLatLng.distanceTo(L.latLng([stop.position[0], stop.position[1]])) < 500
     );
@@ -172,14 +150,12 @@ function RoutePlannerControl() {
       endLatLng.distanceTo(L.latLng([stop.position[0], stop.position[1]])) < 500
     );
     
-    // Find bus routes that connect these stops
     const suggestions: BusSuggestion[] = [];
     
     nearStartStops.forEach(startStop => {
       nearEndStops.forEach(endStop => {
         if (startStop.id === endStop.id) return;
         
-        // Find buses that serve both stops
         startStop.buses.forEach(bus => {
           const endHasSameBus = endStop.buses.some(endBus => 
             endBus.number === bus.number
@@ -203,7 +179,6 @@ function RoutePlannerControl() {
     setSuggestedBuses(suggestions);
   };
 
-  // Reset the route planner
   const resetRoute = () => {
     setStartPoint(null);
     setEndPoint(null);
@@ -212,7 +187,6 @@ function RoutePlannerControl() {
     setSuggestedBuses([]);
   };
 
-  // Select a place from the predefined list
   interface Place {
     id: number;
     name: string;
@@ -241,7 +215,7 @@ function RoutePlannerControl() {
       ) : (
         <div className="bg-white rounded-lg shadow-lg p-4 max-w-md w-full">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-bold text-lg">Plan Your Route</h3>
+            <h3 className="font-bold text-lg">Планування маршруту</h3>
             <button 
               onClick={() => {
                 setShowPlanner(false);
@@ -254,7 +228,6 @@ function RoutePlannerControl() {
           </div>
           
           <div className="space-y-4">
-            {/* Start point selector */}
             <div className="flex items-center space-x-2">
               <div className="bg-green-500 rounded-full w-4 h-4"></div>
               <div className="flex-1">
@@ -263,12 +236,12 @@ function RoutePlannerControl() {
                     onClick={() => setSelectingPoint('start')}
                     className={`w-full p-2 border rounded text-left ${startPoint ? 'bg-green-50' : 'bg-gray-50'}`}
                   >
-                    {startPoint ? 'Start point selected' : 'Select start point on map'}
+                    {startPoint ? 'Точка старту вибрана' : 'Виберіть точку старту на мапі'}
                   </button>
                   
                   {selectingPoint === 'start' && (
                     <div className="absolute left-0 right-0 top-full mt-1 bg-white border rounded shadow-lg z-50 max-h-40 overflow-y-auto">
-                      <div className="p-2 border-b font-semibold">Choose from places:</div>
+                      <div className="p-2 border-b font-semibold">Оберіть з місць:</div>
                       {places.map(place => (
                         <button
                           key={place.id} 
@@ -281,19 +254,16 @@ function RoutePlannerControl() {
                       <button
                         className="w-full text-left p-2 hover:bg-gray-100 text-blue-600"
                         onClick={() => {
-                          // Keep selecting mode but close dropdown
                           document.addEventListener('click', () => {}, {once: true});
                         }}
                       >
-                        Click on map instead
+                        Натисніть на мапі натомість
                       </button>
                     </div>
                   )}
                 </div>
               </div>
             </div>
-            
-            {/* End point selector */}
             <div className="flex items-center space-x-2">
               <div className="bg-red-500 rounded-full w-4 h-4"></div>
               <div className="flex-1">
@@ -302,12 +272,12 @@ function RoutePlannerControl() {
                     onClick={() => setSelectingPoint('end')}
                     className={`w-full p-2 border rounded text-left ${endPoint ? 'bg-red-50' : 'bg-gray-50'}`}
                   >
-                    {endPoint ? 'End point selected' : 'Select end point on map'}
+                    {endPoint ? 'Точка кінця вибрана' : 'Виберіть точку кінця на мапі'}
                   </button>
                   
                   {selectingPoint === 'end' && (
                     <div className="absolute left-0 right-0 top-full mt-1 bg-white border rounded shadow-lg z-50 max-h-40 overflow-y-auto">
-                      <div className="p-2 border-b font-semibold">Choose from places:</div>
+                      <div className="p-2 border-b font-semibold">Виберіть з місць:</div>
                       {places.map(place => (
                         <button
                           key={place.id} 
@@ -320,11 +290,10 @@ function RoutePlannerControl() {
                       <button
                         className="w-full text-left p-2 hover:bg-gray-100 text-blue-600"
                         onClick={() => {
-                          // Keep selecting mode but close dropdown
                           document.addEventListener('click', () => {}, {once: true});
                         }}
                       >
-                        Click on map instead
+                        Натисніть на мапі натомість
                       </button>
                     </div>
                   )}
@@ -332,7 +301,6 @@ function RoutePlannerControl() {
               </div>
             </div>
             
-            {/* Options */}
             <div className="flex items-center">
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input 
@@ -341,45 +309,44 @@ function RoutePlannerControl() {
                   onChange={() => setUseTactilePathsOption(!useTactilePathsOption)}
                   className="form-checkbox h-4 w-4 text-blue-600"
                 />
-                <span>Use tactile paths when available</span>
+                <span>Використовувати тактильні шляхи, де доступно</span>
               </label>
             </div>
             
-            {/* Route information */}
             {distance && (
               <div className="mt-4 p-3 bg-gray-50 rounded">
                 <div className="flex items-center space-x-2 mb-2">
                   <FaWalking className="text-gray-700" />
-                  <span className="font-semibold">Distance: {(distance / 1000).toFixed(2)} km</span>
+                  <span className="font-semibold">Відстань: {(distance / 1000).toFixed(2)} км</span>
                 </div>
                 
                 {suggestedBuses.length > 0 && (
                   <div>
                     <h4 className="font-semibold flex items-center mb-2">
                       <FaBus className="mr-2 text-gray-700" /> 
-                      Suggested bus routes:
+                      Запропоновані автобусні маршрути:
                     </h4>
                     <ul className="space-y-2">
                       {suggestedBuses.map((bus, index) => (
                         <li key={index} className="p-2 bg-white rounded border">
                           <div className="flex justify-between">
-                            <span className="font-bold">Bus #{bus.number}</span>
+                            <span className="font-bold">Автобус #{bus.number}</span>
                             {bus.accessible && (
                               <FaAccessibleIcon className="text-blue-600" title="Accessible" />
                             )}
                           </div>
                           <div className="text-sm text-gray-600">
-                            From: {bus.startStop} To: {bus.endStop}
+                            Від: {bus.startStop} До: {bus.endStop}
                           </div>
                           <div className="mt-1 text-xs flex flex-wrap gap-1">
                             {bus.lowFloor && (
-                              <span className="bg-green-100 text-green-800 px-1 rounded">Low Floor</span>
+                              <span className="bg-green-100 text-green-800 px-1 rounded">Низька підлога</span>
                             )}
                             {bus.visualAnnouncements && (
-                              <span className="bg-blue-100 text-blue-800 px-1 rounded">Visual Announcements</span>
+                              <span className="bg-blue-100 text-blue-800 px-1 rounded">Візуальні оголошення</span>
                             )}
                             {bus.tactileMarkings && (
-                              <span className="bg-purple-100 text-purple-800 px-1 rounded">Tactile Markings</span>
+                              <span className="bg-purple-100 text-purple-800 px-1 rounded">Тактильні маркування</span>
                             )}
                           </div>
                         </li>
@@ -390,26 +357,23 @@ function RoutePlannerControl() {
               </div>
             )}
             
-            {/* Actions */}
             <div className="flex space-x-2">
               <button 
                 onClick={resetRoute}
                 className="flex-1 bg-gray-200 text-gray-800 p-2 rounded hover:bg-gray-300"
               >
-                Reset
+                Скинути
               </button>
               <button 
                 onClick={() => setShowPlanner(false)}
                 className="flex-1 bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
               >
-                Close
+                Закрити
               </button>
             </div>
           </div>
         </div>
       )}
-      
-      {/* Display markers for selected points */}
       {startPoint && (
         <Marker 
           position={startPoint}
@@ -422,7 +386,7 @@ function RoutePlannerControl() {
             shadowSize: [41, 41]
           })}
         >
-          <Popup>Start Point</Popup>
+          <Popup>Точка старту</Popup>
         </Marker>
       )}
       
@@ -438,11 +402,9 @@ function RoutePlannerControl() {
             shadowSize: [41, 41]
           })}
         >
-          <Popup>End Point</Popup>
+          <Popup>Точка кінця</Popup>
         </Marker>
       )}
-      
-      {/* Display the calculated route */}
       {calculatedRoute && (
         <Polyline 
           positions={calculatedRoute} 
