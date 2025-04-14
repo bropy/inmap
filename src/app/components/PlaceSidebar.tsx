@@ -7,6 +7,7 @@ import { Review } from "@/data/review";
 import AccessibilityInfo  from "./AccessibilityInfo";
 import ReviewsList from './ReviewsList';
 import SuggestChanges from './SuggestChanges';
+import AddComment from './AddComment';
 
 export default function PlaceSidebar({
   place,
@@ -16,65 +17,7 @@ export default function PlaceSidebar({
   onClose: () => void;
 }) {
 
-
-  var [review, setReview] = useState({
-    rating: 0,
-    comment: "",
-  });
-
-  useEffect(() => {
-    setReview({
-      rating: 0,
-      comment: "",
-    });
-  }, [place]);
-
   const [reviews, setReviews] = useState<Review[]>([]);
-
-  const SendReview = () => { 
-    const newId = Math.max(...reviews.map((r) => r.id)) + 1;
-
-    var newReview = {
-      id: newId,
-      location_id: place.id,
-      userName: "User",
-      user: 0,
-      rating: review.rating,
-      comment: review.comment,
-    };
-
-    reviews.unshift(newReview);
-
-    const sendReview = async () => {
-      const response = await fetch("http://127.0.0.1:8000/api/reviews/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          location_id: place.id,
-          rating: review.rating,
-          comment: review.comment,
-        }),
-        
-      });
-      console.log("Response:", JSON.stringify({
-        location_id: place.id,
-        rating: review.rating,
-        comment: review.comment,
-      }));
-      if (!response.ok) {
-        console.error("Помилка надсилання відгуку:", await response.text());
-      }
-    };
-    sendReview();
-
-      setReview({
-        rating: -1,
-        comment: "",
-      });
-  }
 
   return (
     <div className="pb-16 fixed top-12 right-0 h-full w-80 bg-white shadow-lg z-[1001] p-4 overflow-y-auto transition-transform transform translate-x-0">
@@ -88,50 +31,19 @@ export default function PlaceSidebar({
           ✖
         </button>
       </div>
+
       <img
         src={place.image_url}
         className="w-full h-48 object-cover bg-amber-50 mb-4 rounded-lg"
         alt={place.name + " Image"}
       />
+
       <div className="bg-gray-200 p-2 mb-4 rounded-lg">
         <p className="text-gray-700 ">{place.description}</p>
       </div>
       <AccessibilityInfo place={place} />
       <SuggestChanges place={place} />
-      {review.rating != -1 && (
-        <div className="flex justify-center flex-wrap gap-1 mt-4 w-full rounded-lg bg-gray-200 p-2">
-          <textarea
-            onInput={(e: any) => {
-              e.style.height = "1px";
-              e.style.height = e.scrollHeight + "px";
-            }}
-            placeholder="Напишіть відгук"
-            className="border border-gray-300 text-black rounded px-2 py-1 w-full mb-2 h-full mr-1 overflow-hidden resize-none min-h-8"
-            value={review.comment}
-            onChange={(e) => setReview({ ...review, comment: e.target.value })}
-          />
-
-          {review.comment.trim() !== "" && (
-            <>
-              <Rating
-                initialValue={review.rating}
-                SVGstyle={{ display: "inline" }}
-                onClick={(rate: number) => {
-                  setReview({ ...review, rating: rate });
-                }}
-              />
-              {review.rating > 0 && (
-                <button
-                  className="w-full bg-gray-400 hover:bg-gray-500 transition text-black px-4 py-2 rounded h-full cursor-pointer"
-                  onClick={SendReview}
-                >
-                  Надіслати
-                </button>
-              )}
-            </>
-          )}
-        </div>
-      )}
+      <AddComment place={place} setReviews={setReviews} reviews={reviews}  />
       <ReviewsList place={place} setReviews={setReviews} reviews={reviews} />
     </div>
   );
