@@ -16,6 +16,7 @@ function SuggestChanges({ place }: { place: Place }) {
     };
 
     const submitAccessibilityChanges = () => {
+      setEditMode(false);
       //надіслати пропозицію на сервер
     };
 
