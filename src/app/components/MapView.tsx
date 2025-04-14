@@ -60,9 +60,7 @@ export default function MapView({ filters }: { filters: Filters }) {
     }
     fetchPlaces();
   },[]);
-
-
-
+  
   return (
     <div className="bg-white relative min-h-screen md:pl-80 text-black">
       <SearchBar
