@@ -14,19 +14,19 @@ export default function RegisterPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch('/register/', {
+    const res = await fetch('http://localhost:8000/api/register/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, email, password }),
     });
-
+    console.log(JSON.stringify({ username, email, password }));
+    const data = await res.json().catch(() => null);
     if (res.status === 201) {
       setSuccess(true);
       setTimeout(() => router.push('/login'), 1500); 
     } else {
-      const data = await res.json().catch(() => null);
-      setError(data?.message || 'Щось пішло не так');
-    }
+      setError(data?.error || 'Щось пішло не так');
+    }    
   };
 
   return (
