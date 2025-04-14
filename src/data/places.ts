@@ -10,7 +10,7 @@ export type Place = {
     visualImpairmentFriendly: boolean;
     wheelchairAccessible: boolean;
   };
-  image: string;
+  image_url: string;
   description: string;
 };
 
@@ -27,7 +27,7 @@ export const places: Place[] = [
       visualImpairmentFriendly: false,
       wheelchairAccessible: true,
     },
-    image: 'https://veronica.ua/wp-content/uploads/2018/02/amadeus-5.jpg',
+    image_url: 'https://veronica.ua/wp-content/uploads/2018/02/amadeus-5.jpg',
     description: 'Атмосферний бар у центрі Львова з креативним інтер’єром та живою музикою.',
   },
   {
@@ -42,7 +42,7 @@ export const places: Place[] = [
       visualImpairmentFriendly: true,
       wheelchairAccessible: true,
     },
-    image: '/images/planetakino.jpg',
+    image_url: '/image_urls/planetakino.jpg',
     description: 'Сучасний кінотеатр із технологією 4DX у торговому центрі Forum Lviv.',
   },
   {
@@ -57,7 +57,7 @@ export const places: Place[] = [
       visualImpairmentFriendly: false,
       wheelchairAccessible: false,
     },
-    image: '/images/ribs.jpg',
+    image_url: '/image_urls/ribs.jpg',
     description: 'Популярний ресторан з м’ясними стравами у старовинній будівлі Арсеналу.',
   },
   {
@@ -72,7 +72,7 @@ export const places: Place[] = [
       visualImpairmentFriendly: true,
       wheelchairAccessible: false,
     },
-    image: '/images/mcdonalds.jpg',
+    image_url: '/image_urls/mcdonalds.jpg',
     description: 'Мережевий ресторан швидкого харчування з відомим меню та швидким обслуговуванням.',
   },
   {
@@ -87,7 +87,7 @@ export const places: Place[] = [
       visualImpairmentFriendly: true,
       wheelchairAccessible: true,
     },
-    image: '/images/goodfried.jpg',
+    image_url: '/image_urls/goodfried.jpg',
     description: 'Сучасне місце з авторськими стравами на фритюрі та крафтовими напоями.',
   },
   {
@@ -102,7 +102,7 @@ export const places: Place[] = [
       visualImpairmentFriendly: true,
       wheelchairAccessible: true,
     },
-    image: '/images/virmenka.jpg',
+    image_url: '/image_urls/virmenka.jpg',
     description: 'Культове кафе з автентичною кавою у вірменському кварталі Львова.',
   },
   {
@@ -117,7 +117,7 @@ export const places: Place[] = [
       visualImpairmentFriendly: true,
       wheelchairAccessible: false,
     },
-    image: '/images/chocolate.jpg',
+    image_url: '/image_urls/chocolate.jpg',
     description: 'Магазин і кафе з ручною шоколадною продукцією та видом на центр міста.',
   },
 ];
