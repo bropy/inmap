@@ -6,6 +6,7 @@ import { Rating } from "react-simple-star-rating";
 import { Review } from "@/data/review";
 import AccessibilityInfo  from "./AccessibilityInfo";
 import ReviewsList from './ReviewsList';
+import SuggestChanges from './SuggestChanges';
 
 export default function PlaceSidebar({
   place,
@@ -14,6 +15,8 @@ export default function PlaceSidebar({
   place: Place;
   onClose: () => void;
 }) {
+
+
   var [review, setReview] = useState({
     rating: 0,
     comment: "",
@@ -26,24 +29,7 @@ export default function PlaceSidebar({
     });
   }, [place]);
 
-  const [editMode, setEditMode] = useState(false);
-  const [suggestedAccessibility, setSuggestedAccessibility] = useState(
-    place.accessibility
-  );
-
   const [reviews, setReviews] = useState<Review[]>([]);
-
-  const toggleAccessibility = (key: keyof typeof suggestedAccessibility) => {
-    setSuggestedAccessibility((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
-
-  const submitAccessibilityChanges = () => {
-    //надіслати пропозицію на сервер
-  };
-
 
   const SendReview = () => { 
     const newId = Math.max(...reviews.map((r) => r.id)) + 1;
@@ -111,51 +97,7 @@ export default function PlaceSidebar({
         <p className="text-gray-700 ">{place.description}</p>
       </div>
       <AccessibilityInfo place={place} />
-      <div className="bg-gray-100 rounded mt-3">
-        <button
-          className="w-full bg-gray-400 text-white px-4 py-2 rounded"
-          onClick={() => setEditMode(!editMode)}
-        >
-          {editMode ? "Скасувати" : "Запропонувати зміни"}
-        </button>
-
-        {editMode && (
-          <div className="bg-gray-200 p-2 rounded mt-2">
-            <h3 className="text-sm font-semibold mb-2">
-              Позначте Доступність:
-            </h3>
-            {Object.entries(suggestedAccessibility).map(([key, value]) => (
-              <label key={key} className="block text-sm mb-2 ">
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  checked={value}
-                  onChange={() =>
-                    toggleAccessibility(
-                      key as keyof typeof suggestedAccessibility
-                    )
-                  }
-                />
-                {key === "ramps" && "Пандуси"}
-                {key === "adaptedToilets" && "Адаптовані туалети"}
-                {key === "tactileElements" && "Тактильні елементи"}
-                {key === "wideEntrance" && "Зручний вхід"}
-                {key === "visualImpairmentFriendly" &&
-                  "Для людей із вадами зору"}
-                {key === "wheelchairAccessible" && "Для людей на візку"}
-              </label>
-            ))}
-
-            <button
-              className=" bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded "
-              onClick={submitAccessibilityChanges}
-            >
-              Надіслати
-            </button>
-          </div>
-        )}
-        
-      </div>
+      <SuggestChanges place={place} />
       {review.rating != -1 && (
         <div className="flex justify-center flex-wrap gap-1 mt-4 w-full rounded-lg bg-gray-200 p-2">
           <textarea
@@ -190,7 +132,6 @@ export default function PlaceSidebar({
           )}
         </div>
       )}
-
       <ReviewsList place={place} setReviews={setReviews} reviews={reviews} />
     </div>
   );
