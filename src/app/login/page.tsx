@@ -13,12 +13,12 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch('/api-token-auth/', {
+    const res = await fetch('http://127.0.0.1:8000/api/login/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     });
-
+    console.log(JSON.stringify({ username, password }));
     if (res.ok) {
       const data = await res.json();
       localStorage.setItem('token', data.token);

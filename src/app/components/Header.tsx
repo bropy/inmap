@@ -10,7 +10,7 @@ export default function Header() {
         <Link href="/" className="text-xl font-bold text-blue-900">
           InMap
         </Link>
-
+        {!localStorage.getItem('token') && (
         <nav className="flex gap-4 text-sm sm:text-base">
           <Link href="/map" className="text-gray-700 hover:text-blue-900">
             Мапа
@@ -22,6 +22,14 @@ export default function Header() {
             Реєстрація
           </Link>
         </nav>
+        )}
+        {localStorage.getItem('token') && (
+        <nav className="flex gap-4 text-sm sm:text-base">
+          <Link href="/map" className="text-gray-700 hover:text-blue-900">
+            Ви зареєстровані
+          </Link>
+        </nav>
+        )}
       </div>
     </header>
   );
