@@ -105,8 +105,51 @@ export default function PlaceSidebar({
         <p className="text-gray-700 ">{place.description}</p>
       </div>
       <AccessibilityInfo place={place} />
-      
-      
+      <div className="bg-gray-100 rounded mt-3">
+        <button
+          className="w-full bg-gray-400 text-white px-4 py-2 rounded"
+          onClick={() => setEditMode(!editMode)}
+        >
+          {editMode ? "Скасувати" : "Запропонувати зміни"}
+        </button>
+
+        {editMode && (
+          <div className="bg-gray-200 p-2 rounded mt-2">
+            <h3 className="text-sm font-semibold mb-2">
+              Позначте Доступність:
+            </h3>
+            {Object.entries(suggestedAccessibility).map(([key, value]) => (
+              <label key={key} className="block text-sm mb-2 ">
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  checked={value}
+                  onChange={() =>
+                    toggleAccessibility(
+                      key as keyof typeof suggestedAccessibility
+                    )
+                  }
+                />
+                {key === "ramps" && "Пандуси"}
+                {key === "adaptedToilets" && "Адаптовані туалети"}
+                {key === "tactileElements" && "Тактильні елементи"}
+                {key === "wideEntrance" && "Зручний вхід"}
+                {key === "visualImpairmentFriendly" &&
+                  "Для людей із вадами зору"}
+                {key === "wheelchairAccessible" && "Для людей на візку"}
+              </label>
+            ))}
+
+            <button
+              className=" bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded "
+              onClick={submitAccessibilityChanges}
+            >
+              Надіслати
+            </button>
+          </div>
+        )}
+        
+      </div>
       {review.rating != -1 && (
         <div className="flex justify-center flex-wrap gap-1 mt-4 w-full rounded-lg bg-gray-200 p-2">
           <textarea
