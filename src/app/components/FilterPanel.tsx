@@ -38,6 +38,12 @@ export default function FilterPanel({ onChange }: { onChange: (filters: Filters)
 
   return (
     <div className="absolute top-4 left-84 z-[1000] w-58 text-black font-medium">
+      <div className="bg-gradient-to-r from-orange-100 to-orange-200 p-4 rounded-t-2xl shadow-inner">
+        <div className="w-20 h-1 bg-orange-400 mx-auto rounded-full mb-2"></div>
+        <p className="text-center text-lg font-semibold text-orange-800 mb-2">
+          Позначення тактильної плитки
+        </p>
+      </div>
       <div
         onClick={() => setVisible(!visible)}
         className="relative z-10 bg-gray-300 rounded-2xl cursor-pointer shadow px-4 py-2 text-center"
